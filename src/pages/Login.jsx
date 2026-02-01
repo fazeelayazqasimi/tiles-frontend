@@ -7,7 +7,10 @@ export default function Login() {
 
   const login = async () => {
     try {
-      const res = await axios.post("https://tiles-backend-ten.vercel.app/api/auth/login", { email, password });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        { email, password }
+      );
       localStorage.setItem("token", res.data.token);
       window.location.href = "/";
     } catch (err) {
@@ -17,20 +20,28 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <h1 className="text-2xl font-bold">Login</h1>
       <input
+        className="border p-2 rounded w-64"
         placeholder="Email"
         value={email}
         onChange={e => setEmail(e.target.value)}
       />
       <input
+        className="border p-2 rounded w-64"
         placeholder="Password"
         type="password"
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
-      <button onClick={login} disabled={!email || !password}>Login</button>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded w-64"
+        onClick={login}
+        disabled={!email || !password}
+      >
+        Login
+      </button>
     </div>
   );
 }
